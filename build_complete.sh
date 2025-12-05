@@ -13,6 +13,7 @@ fi
 declare -A special_boards=(
   ["brask"]="mmcblk0 nvme0n1"
   ["brya"]="mmcblk0 nvme0n1"
+  ["constitution"]="mmcblk0 nvme0n1"
   ["cherry"]="mmcblk0"
   ["corsola"]="mmcblk0"
   ["guybrush"]="mmcblk0 nvme0n1"
@@ -65,9 +66,9 @@ echo "found recovery image url: $image_url"
 echo "downloading recovery image"
 if [ ! -f "$image_zip_file" ]; then
   if [ "$QUIET" ]; then
-    wget -q "$image_url" -O "$image_zip_file"
+    aria2c -s 16 -x 16 "$image_url" -d "$data_dir" -o "$image_zip_name" --show-console-readout false 
   else
-    wget "$image_url" -O "$image_zip_file"
+    aria2c -s 16 -x 16 "$image_url" -d "$data_dir" -o "$image_zip_name"
   fi
 fi
 
